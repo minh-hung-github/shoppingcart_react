@@ -1,13 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import './Header.scss';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class Header extends PureComponent {
     render() {
+        const { quantityTotal } = this.props;
         return (
             <>
-
                 <header className="header trans_300">
 
                     {/* <!-- Top Navigation --> */}
@@ -74,10 +76,10 @@ class Header extends PureComponent {
                                         <ul className="navbar_user">
 
                                             <li className="checkout">
-                                                <a href="#">
+                                                <Link to="/products/shoppingcart">
                                                     <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-                                                    <span id="checkout_items" className="checkout_items">2</span>
-                                                </a>
+                                                    <span id="checkout_items" className="checkout_items">{quantityTotal}</span>
+                                                </Link>
                                             </li>
                                         </ul>
                                         <div className="hamburger_container">
@@ -90,63 +92,23 @@ class Header extends PureComponent {
                     </div>
 
                 </header>
-
-                <div className="fs_menu_overlay"></div>
-                <div className="hamburger_menu">
-                    <div className="hamburger_close"><i className="fa fa-times" aria-hidden="true"></i></div>
-                    <div className="hamburger_menu_content text-right">
-                        <ul className="menu_top_nav">
-                            <li className="menu_item has-children">
-                                <a href="#">
-                                    usd
-                <i className="fa fa-angle-down"></i>
-                                </a>
-                                <ul className="menu_selection">
-                                    <li><a href="#">cad</a></li>
-                                    <li><a href="#">aud</a></li>
-                                    <li><a href="#">eur</a></li>
-                                    <li><a href="#">gbp</a></li>
-                                </ul>
-                            </li>
-                            <li className="menu_item has-children">
-                                <a href="#">
-                                    English
-                <i className="fa fa-angle-down"></i>
-                                </a>
-                                <ul className="menu_selection">
-                                    <li><a href="#">French</a></li>
-                                    <li><a href="#">Italian</a></li>
-                                    <li><a href="#">German</a></li>
-                                    <li><a href="#">Spanish</a></li>
-                                </ul>
-                            </li>
-                            <li className="menu_item has-children">
-                                <a href="#">
-                                    My Account
-                <i className="fa fa-angle-down"></i>
-                                </a>
-                                <ul className="menu_selection">
-                                    <li><a href="#"><i className="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
-                                    <li><a href="#"><i className="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
-                                </ul>
-                            </li>
-                            <li className="menu_item"><a href="#">home</a></li>
-                            <li className="menu_item"><a href="categories.html">shop</a></li>
-                            <li className="menu_item"><a href="#">promotion</a></li>
-                            <li className="menu_item"><a href="#">pages</a></li>
-                            <li className="menu_item"><a href="https://nordiccoder.com/blog" target="blank">blog</a></li>
-                            <li className="menu_item"><a href="#">contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-
             </>
         );
     }
 }
 
 Header.propTypes = {
-
+    quantityTotal: PropTypes.number.isRequired,
 };
 
-export default Header;
+const mapStateToProps = state => ({
+    quantityTotal: state.cartReducer.quantityTotal,
+});
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+
+    }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

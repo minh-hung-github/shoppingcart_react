@@ -2,6 +2,10 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import './SingleProduct.scss';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addTocart, increaseCart, decreaseCart } from '../../../action/cart';
+
 
 class SingleProduct extends PureComponent {
 
@@ -13,8 +17,27 @@ class SingleProduct extends PureComponent {
         }
     }
 
+    handle_In_Or_Decrease_Cart = (str) => {
+        const { increaseCart, decreaseCart } = this.props;
+
+        if (str === 'plus') {
+            increaseCart();
+        }
+
+        if (str === 'minus') {
+            decreaseCart();
+        }
+    }
+
+    handleAddCartItem = (product) => {
+        const { addToCart } = this.props;
+        addToCart(product);
+    }
+
     render() {
-        const { product, imageList, showImage, salePrice } = this.props;
+        const { product, imageList, showImage, salePrice, cartList } = this.props;
+        const { totalPrice, quantityCurrent } = this.props;
+        // console.log('cartList ne: ', cartList, totalPrice, quantityCurrent);
         return (
             <div className="row">
                 <div className="col-lg-7">
@@ -84,11 +107,11 @@ class SingleProduct extends PureComponent {
                         <div className="quantity d-flex flex-column flex-sm-row align-items-sm-center">
                             <span>Quantity:</span>
                             <div className="quantity_selector">
-                                <span className="minus" onClick={() => this.handleMinusOrPlusProduct("minus")}><i className="fa fa-minus" aria-hidden="true"></i></span>
-                                <span id="quantity_value">0</span>
-                                <span className="plus" onClick={() => this.handleMinusOrPlusProduct("plus")}><i className="fa fa-plus" aria-hidden="true"></i></span>
+                                <span className="minus" onClick={() => this.handle_In_Or_Decrease_Cart("minus")}><i className="fa fa-minus" aria-hidden="true"></i></span>
+                                <span id="quantity_value">{quantityCurrent}</span>
+                                <span className="plus" onClick={() => this.handle_In_Or_Decrease_Cart("plus")}><i className="fa fa-plus" aria-hidden="true"></i></span>
                             </div>
-                            <div className="red_button add_to_cart_button"><Link to="#" className="red_button">add to cart</Link></div>
+                            <div className="red_button add_to_cart_button" id="showcart" onClick={() => this.handleAddCartItem(product)}><Link to="#">add to cart</Link></div>
                             <div className="product_favorite d-flex flex-column align-items-center justify-content-center"></div>
                         </div>
                     </div>
@@ -104,6 +127,14 @@ SingleProduct.propTypes = {
     salePrice: PropTypes.number,
     showImage: PropTypes.string,
     onChangeShowImage: PropTypes.func,
+
+    cartList: PropTypes.array.isRequired,
+    totalPrice: PropTypes.number.isRequired,
+    quantityCurrent: PropTypes.number.isRequired,
+
+    addToCart: PropTypes.func.isRequired,
+    increaseCart: PropTypes.func.isRequired,
+    decreaseCart: PropTypes.func.isRequired,
 };
 
 SingleProduct.defaultProps = {
@@ -114,4 +145,19 @@ SingleProduct.defaultProps = {
     onChangeShowImage: null,
 }
 
-export default SingleProduct;
+const mapStateToProps = state => ({
+    cartList: state.cartReducer.cartList,
+    totalPrice: state.cartReducer.totalPrice,
+    quantityCurrent: state.cartReducer.quantityCurrent,
+})
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        addToCart: addTocart,
+        increaseCart: increaseCart,
+        decreaseCart: decreaseCart,
+    }, dispatch)
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct);

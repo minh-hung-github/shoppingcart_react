@@ -39,15 +39,18 @@
 {
 	color: #b5aec4;
 }
-.tab.active span
-{
-	color: #fe4c50;
-	border-bottom: solid 1px #fe4c50;
+/* .tab.active span {
+    color: #fe4c50;
+    border-bottom: solid 1px #fe4c50;
+} */
+.tab .active span {
+    color: #fe4c50;
+    border-bottom: solid 1px #fe4c50;
 }
 .tab_container
 {
 	width: 100%;
-	display: none;
+	// display: none;
 }
 .tab_container.active
 {

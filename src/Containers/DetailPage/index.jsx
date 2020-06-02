@@ -5,6 +5,11 @@ import SingleProduct from '../../Components/Detail/SingleProduct';
 import productApi from '../../api/productApi';
 import TabsDetailMenu from '../../Components/Detail/TabsDetailMenu';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import Additional from '../../Components/Detail/TabsDetails/Additional';
+import Descriptional from '../../Components/Detail/TabsDetails/Description';
+import Review from '../../Components/Detail/TabsDetails/Review';
+import DetailPageContext from '../../contexts/DetailPageContext';
+
 
 class DetailPage extends PureComponent {
     constructor(props) {
@@ -22,7 +27,7 @@ class DetailPage extends PureComponent {
         const { match } = this.props;
         try {
             const newProduct = await productApi.getById(match.params.productId);
-            console.log(newProduct);
+            // console.log(newProduct);
             this.setState(
                 {
                     product: newProduct,
@@ -45,6 +50,10 @@ class DetailPage extends PureComponent {
     render() {
         const { match } = this.props;
         const { product, imageList, showImage, salePrice } = this.state;
+        const initContext = {
+            product,
+            imageList,
+        }
         // console.log(match);
         return (
             <>
@@ -66,12 +75,15 @@ class DetailPage extends PureComponent {
                         />
                         <div className="row">
                             <div className="col">
-                                <Switch>
-                                    <Route path="/products/:productId/description" component={null} />
-                                    <Route path="/products/:productId/information" component={null} />
-                                    <Route path="/products/:productId/review" component={null} />
-                                    <Redirect from="/products/:productId" to="/products/:productId/description" />
-                                </Switch>
+                                <DetailPageContext.Provider value={initContext}>
+                                    <Switch>
+                                        <Route exact path="/products/:productId/description" component={Descriptional} />
+                                        <Route path="/products/:productId/information" component={Additional} />
+                                        <Route path="/products/:productId/review" component={Review} />
+                                        <Redirect from="/products/:productId" to="/products/:productId/description" />
+                                    </Switch>
+                                </DetailPageContext.Provider>
+
                             </div>
                         </div>
                     </div>

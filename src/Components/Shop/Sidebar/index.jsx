@@ -12,12 +12,19 @@ class Sidebar extends PureComponent {
         super(props);
 
         this.state = {
-            minPrice: 0,
-            maxPrice: 200000,
+            min1: 50000,
+            max1: 200000,
         }
     }
+
+    handleChangePrice = (value) => {
+        this.setState({ min1: value[0], max1: value[1] });
+    }
+
+
     render() {
-        const { minPrice, maxPrice } = this.state;
+        // const [value, setValue] = React.useState([20, 37]);
+        const { min1, max1 } = this.state;
         return (
             <div className="sidebar">
                 <div className="sidebar_section">
@@ -39,17 +46,19 @@ class Sidebar extends PureComponent {
                     <div className="sidebar_title">
                         <h5>Filter by Price</h5>
                     </div>
-                    <p>
-                        {/* <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;"></input> */}
-                        {/* ${value[0]}-${value[1]} */}
-                    </p>
+
                     <div id="range-slider">
+                        <div>{min1} - {max1}</div>
                         <Range
-                            min={10000}
+                            min={0}
                             max={30000000}
-                            defaultValue={[minPrice, maxPrice]}
+                            defaultValue={[min1, max1]}
+                            tipFormatter={value => `${value.toLocaleString('vi')} VND`}
+                            onAfterChange={this.handleChangePrice}
                         />
                     </div>
+
+
                     <div className="filter_button"><span>filter</span></div>
                 </div>
 

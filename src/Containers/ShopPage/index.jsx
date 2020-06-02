@@ -36,7 +36,7 @@ class ShopPage extends PureComponent {
     async componentDidMount() {
         try {
             const productList = await productApi.getAll(this.state.filter);
-            console.log(productList);
+            // console.log(productList);
             this.setState({ paginations: productList.pagination, shopProductList: productList.data, })
         } catch (error) {
             console.log('Failed to get data', error.message);

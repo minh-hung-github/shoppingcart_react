@@ -194,19 +194,13 @@
 {
 	color: #b5aec4;
 }
-.add_to_cart_button
+#showcart
 {
-	// width: 100%;
-	// font-size: 12px !important;
-
 	width: 100%;
-	visibility: hidden;
-	opacity: 0;
-	-webkit-transition: all 0.3s ease;
-	-moz-transition: all 0.3s ease;
-	-ms-transition: all 0.3s ease;
-	-o-transition: all 0.3s ease;
-	transition: all 0.3s ease;
+	font-size: 12px !important;
+	visibility: visible;
+	opacity: 1;
+	margin-left: 22px;	
 }
 .product_favorite
 {

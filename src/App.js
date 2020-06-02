@@ -10,6 +10,7 @@ import ContactPage from './Containers/ContactPage';
 import Benefit from './Components/Common/Benefit';
 import Footer from './Components/Common/Footer';
 import DetailPage from './Containers/DetailPage';
+import ShoppingCart from './Components/Common/ShoppingCart';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <Route path="/shop" component={ShopPage} />
           <Route path="/promotion" component={PromotionPage} />
           <Route path="/contact" component={ContactPage} />
-          {/* <Route path="/products/shoppingcart" component{} /> */}
+          <Route path="/products/shoppingcart" component={ShoppingCart} />
           <Route path="/products/:productId" component={DetailPage} />
 
 

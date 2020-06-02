@@ -31,11 +31,11 @@ class ArrivalsProductlist extends PureComponent {
                                                         <span>-$20</span>
                                                     </div>
                                                     <div className="product_info">
-                                                        <h6 className="product_name"><a href="single.html">{product.name}</a></h6>
+                                                        <h6 className="product_name"><Link to="single.html">{product.name}</Link></h6>
                                                         <div className="product_price">{product.salePrice}<span>{product.originalPrice}</span></div>
                                                     </div>
                                                 </div>
-                                                <div className="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+                                                <div className="red_button add_to_cart_button"><Link to="#">add to cart</Link></div>
                                             </div>
                                         </Link>
                                     </li>
